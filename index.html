@@ -16,10 +16,10 @@
     --ink-soft:#4B4742;
     --muted:#8A847B;
     --line:#E4DFD6;
-    --red:#6E1423;
-    --red-bright:#8A1E32;
-    --red-deep:#4A0E18;
-    --red-rgb:110,20,35;
+    --red:#3A424B;
+    --red-bright:#525C66;
+    --red-deep:#1E2227;
+    --red-rgb:58,66,75;
     --shadow:rgba(40,30,24,0.08);
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -88,7 +88,7 @@
   .brand{display:flex;align-items:center;gap:14px;cursor:pointer}
   .brand-foot{cursor:pointer}
   .brand:focus-visible,.brand-foot:focus-visible{outline:2px solid var(--red);outline-offset:6px;border-radius:2px}
-  .brand img{height:32px;width:auto;display:block}
+  .brand img{height:44px;width:auto;display:block}
   .nav-cta{
     font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
     color:var(--ink-soft);text-decoration:none;font-weight:500;
@@ -139,6 +139,8 @@
     color:var(--ink);
   }
   .hero h1 em{font-style:italic;color:var(--red);font-weight:380}
+  .hero-sub strong{color:var(--red);font-weight:600}
+  .hero-sub .loc{color:var(--red);font-weight:600}
   .hero-sub{
     margin-top:34px;
     font-size:clamp(1.05rem,1.6vw,1.28rem);
@@ -202,14 +204,21 @@
     display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
     color:var(--ink-soft);margin-bottom:9px;font-weight:500;
   }
-  .field input,.field textarea{
+  .field input,.field textarea,.field select{
     width:100%;border:none;border-bottom:1.5px solid var(--line);
     background:transparent;padding:9px 2px;font-family:inherit;font-size:1rem;
     color:var(--ink);font-weight:300;transition:border-color .3s ease;
   }
-  .field input:focus,.field textarea:focus{outline:none;border-bottom-color:var(--red)}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-bottom-color:var(--red)}
   .field textarea{resize:vertical;min-height:96px}
   .field input::placeholder,.field textarea::placeholder{color:#BEB8AD}
+  .field select{
+    -webkit-appearance:none;appearance:none;cursor:pointer;border-radius:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238A847B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 2px center;padding-right:26px;
+  }
+  .field select:invalid{color:#BEB8AD}
+  .field label .req{color:var(--red);font-weight:600;margin-left:2px}
   .btn{
     appearance:none;border:none;cursor:pointer;
     background:var(--red);color:#fff;
@@ -226,10 +235,50 @@
   .btn:hover svg{transform:translateX(4px)}
   .form-note{margin-top:18px;font-size:.78rem;color:var(--muted);line-height:1.5}
 
+  /* ---- Formular-Validierung & Feedback ---- */
+  .field--error input,.field--error textarea,.field--error select{border-bottom-color:#C0473F}
+  .field--error label{color:#C0473F}
+  .field-error{
+    display:flex;align-items:flex-start;gap:6px;
+    font-size:.78rem;color:#C0473F;line-height:1.45;font-weight:400;
+    margin-top:8px;opacity:0;max-height:0;overflow:hidden;
+    transition:opacity .3s ease,max-height .3s ease;
+  }
+  .field--error .field-error{opacity:1;max-height:60px}
+  .field-error svg{width:14px;height:14px;flex:0 0 auto;margin-top:1px}
+
+  .form-banner{
+    display:flex;align-items:flex-start;gap:11px;
+    margin-top:20px;padding:14px 16px;border-radius:6px;
+    font-size:.86rem;line-height:1.5;font-weight:400;
+    border:1px solid transparent;
+  }
+  .form-banner[hidden]{display:none}
+  .form-banner svg{width:18px;height:18px;flex:0 0 auto;margin-top:1px}
+  .form-banner--err{background:#FBF1F0;border-color:#F0D5D2;color:#9E342D}
+  .form-banner--info{background:var(--paper-2);border-color:var(--line);color:var(--ink-soft)}
+
+  .form-success{
+    text-align:center;padding:18px 8px 6px;
+    animation:fsIn .5s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes fsIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .form-success .fs-badge{
+    width:62px;height:62px;border-radius:50%;margin:0 auto 22px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--red);color:#fff;
+    box-shadow:0 16px 30px -14px rgba(var(--red-rgb),.6);
+  }
+  .form-success .fs-badge svg{width:28px;height:28px}
+  .form-success h3{font-family:'Fraunces',serif;font-weight:380;font-size:1.65rem;color:var(--ink);letter-spacing:-0.01em;margin-bottom:12px}
+  .form-success p{font-size:.96rem;color:var(--ink-soft);font-weight:300;line-height:1.65;max-width:38ch;margin:0 auto 8px}
+  .form-success .fs-detail{font-size:.82rem;color:var(--muted);margin-top:18px}
+  .btn[disabled]{opacity:.6;pointer-events:none}
+
   /* ---------- Footer ---------- */
   footer{
     background:var(--red-deep);
-    color:#F3E4E6;
+    color:#EAECEE;
     padding:64px 0 30px;
   }
   .footer-top{
@@ -242,24 +291,24 @@
     filter:brightness(0) invert(1);
     margin-bottom:18px;
   }
-  .footer-addr{font-size:.92rem;line-height:1.7;color:#EBD3D6;font-weight:300;max-width:34ch}
+  .footer-addr{font-size:.92rem;line-height:1.7;color:#D6DADD;font-weight:300;max-width:34ch}
   .footer-links{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
   .footer-links .fl-title{
-    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#E9B7BC;margin-bottom:4px;font-weight:500;
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#AEB6BD;margin-bottom:4px;font-weight:500;
   }
   .footer-links button,.footer-links a{
-    background:none;border:none;cursor:pointer;color:#F6EAEB;text-decoration:none;
+    background:none;border:none;cursor:pointer;color:#EDEFF1;text-decoration:none;
     font-family:inherit;font-size:.98rem;font-weight:300;letter-spacing:.02em;
     display:inline-flex;align-items:center;gap:9px;transition:color .25s ease;padding:0;
   }
-  .footer-links button::before,.footer-links a::before{content:"";width:6px;height:1px;background:#E9B7BC;transition:width .25s ease}
+  .footer-links button::before,.footer-links a::before{content:"";width:6px;height:1px;background:#AEB6BD;transition:width .25s ease}
   .footer-links button:hover,.footer-links a:hover{color:#fff}
   .footer-links button:hover::before,.footer-links a:hover::before{width:14px}
   .footer-bottom{
     padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
-    font-size:.78rem;color:#D7AEB2;letter-spacing:.03em;
+    font-size:.78rem;color:#A7AEB4;letter-spacing:.03em;
   }
-  .footer-bottom a{color:#D7AEB2;text-decoration:none}
+  .footer-bottom a{color:#A7AEB4;text-decoration:none}
   .footer-bottom a:hover{color:#fff}
 
   /* ---------- Modal ---------- */
@@ -347,7 +396,7 @@
   /* ---------- Über uns ---------- */
   .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:start}
   .about-copy p{font-size:1.05rem;color:var(--ink-soft);font-weight:300;line-height:1.72;margin-bottom:18px;max-width:50ch}
-  .about-copy p strong{color:var(--ink);font-weight:500}
+  .about-copy p strong{color:var(--red);font-weight:600}
   .about-regions{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
   .about-regions span{
     font-size:.82rem;letter-spacing:.04em;color:var(--ink);font-weight:400;
@@ -366,13 +415,13 @@
     display:grid;grid-template-columns:.92fr 1.08fr;
     box-shadow:0 40px 80px -52px rgba(40,30,24,0.20);
   }
-  .apply-intro{padding:56px 50px;background:var(--red-deep);color:#F3E4E6;position:relative}
-  .apply-intro .panel-label{color:#E9B7BC}
+  .apply-intro{padding:56px 50px;background:var(--red-deep);color:#EAECEE;position:relative}
+  .apply-intro .panel-label{color:#AEB6BD}
   .apply-intro h3{font-family:'Fraunces',serif;font-weight:360;font-size:1.85rem;color:#fff;letter-spacing:-0.01em;margin-bottom:18px;line-height:1.18}
-  .apply-intro p{font-size:1rem;color:#EBD3D6;font-weight:300;line-height:1.68;margin-bottom:14px;max-width:34ch}
+  .apply-intro p{font-size:1rem;color:#D6DADD;font-weight:300;line-height:1.68;margin-bottom:14px;max-width:34ch}
   .apply-intro ul{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:13px}
-  .apply-intro li{font-size:.96rem;color:#F6EAEB;font-weight:300;display:flex;align-items:center;gap:12px}
-  .apply-intro li::before{content:"";width:6px;height:6px;border-radius:50%;background:#E9B7BC;flex:0 0 auto}
+  .apply-intro li{font-size:.96rem;color:#EDEFF1;font-weight:300;display:flex;align-items:center;gap:12px}
+  .apply-intro li::before{content:"";width:6px;height:6px;border-radius:50%;background:#AEB6BD;flex:0 0 auto}
   .apply-form{padding:56px 50px;background:linear-gradient(180deg,#fff,#FCFBF8)}
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 
@@ -388,6 +437,19 @@
   }
   .standort-map:hover iframe{filter:grayscale(0) contrast(1) brightness(1)}
   .standort-map::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(40,30,24,.07)}
+  .map-profile{
+    position:absolute;left:0;right:0;bottom:0;z-index:3;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:16px 22px;text-decoration:none;
+    background:rgba(30,34,39,.92);color:#fff;
+    font-size:.92rem;font-weight:500;letter-spacing:.01em;line-height:1.3;
+    transition:background .3s ease;
+  }
+  .map-profile:hover{background:rgba(16,19,23,.96)}
+  .map-profile .mp-name{color:#fff}
+  .map-profile .mp-sub{display:block;font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px}
+  .map-profile svg{width:20px;height:20px;flex:0 0 auto;color:rgba(255,255,255,.8);transition:transform .3s ease}
+  .map-profile:hover svg{transform:translate(3px,-3px)}
   .area-note{margin-top:30px;padding-top:26px;border-top:1px solid var(--line);font-size:.92rem;color:var(--ink-soft);font-weight:300;line-height:1.6}
   .area-note strong{color:var(--ink);font-weight:500}
 
@@ -435,17 +497,30 @@
   .usp p{font-size:.98rem;color:var(--ink-soft);font-weight:300;line-height:1.64}
 
   /* ---------- Leistungen: image cards ---------- */
-  .serv-card{padding:0;cursor:pointer;display:flex;flex-direction:column}
-  .serv-card::before{z-index:3}
-  .serv-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--paper-2)}
-  .serv-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.97);transition:transform .85s cubic-bezier(.2,.7,.2,1)}
-  .serv-card:hover .serv-media img,.serv-card:focus-visible .serv-media img{transform:scale(1.055)}
-  .serv-body{padding:26px 28px 30px;display:flex;flex-direction:column;flex:1}
-  .serv-body .serv-num{margin-bottom:13px}
+  .serv-card{padding:0;cursor:pointer;aspect-ratio:4/5}
+  .serv-card::before{z-index:4}
+  .serv-media{position:absolute;inset:0;overflow:hidden;background:var(--paper-2)}
+  .serv-media img{
+    width:100%;height:100%;object-fit:cover;object-position:center;display:block;
+    transform:scale(1.18);filter:grayscale(.1) saturate(.95);
+    transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .6s ease;
+  }
+  .serv-card:hover .serv-media img,.serv-card:focus-visible .serv-media img{transform:scale(1.42);filter:grayscale(0) saturate(1)}
+  .serv-overlay{
+    position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:26px 26px 24px;
+    background:linear-gradient(180deg,rgba(30,34,39,.42) 0%,rgba(26,30,35,.62) 48%,rgba(18,21,25,.92) 100%);
+    transition:background .5s ease;
+  }
+  .serv-card:hover .serv-overlay,.serv-card:focus-visible .serv-overlay{
+    background:linear-gradient(180deg,rgba(26,30,35,.5) 0%,rgba(22,26,31,.7) 48%,rgba(14,17,20,.95) 100%);
+  }
+  .serv-overlay .serv-num{font-size:.72rem;letter-spacing:.2em;color:rgba(255,255,255,.6);font-weight:500;margin-bottom:12px;display:block}
+  .serv-overlay h3{font-family:'Fraunces',serif;font-weight:400;font-size:1.42rem;color:#fff;margin-bottom:0;letter-spacing:-0.01em;line-height:1.2}
   .serv-card:focus-visible{outline:2px solid var(--red);outline-offset:3px}
-  .serv-more{margin-top:18px;display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:600}
+  .serv-more{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.85);font-weight:600}
   .serv-more svg{width:14px;height:14px;transition:transform .3s ease}
-  .serv-card:hover .serv-more svg{transform:translateX(4px)}
+  .serv-card:hover .serv-more svg,.serv-card:focus-visible .serv-more svg{transform:translateX(4px)}
 
   /* ---------- Service modal ---------- */
   .modal-service{padding:0;max-width:480px;width:calc(100% - 48px);overflow:hidden;border-radius:8px}
@@ -456,8 +531,18 @@
     transition:background .25s ease,transform .25s ease;
   }
   .modal-service .modal-close:hover{background:var(--red-deep);color:#fff;transform:scale(1.06)}
-  .ms-media{position:relative;aspect-ratio:16/10;background:var(--paper-2)}
-  .ms-media img{width:100%;height:100%;object-fit:cover;display:block}
+  .ms-media{position:relative;aspect-ratio:16/10;background:var(--paper-2);overflow:hidden}
+  .ms-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.12);filter:grayscale(.1) saturate(.95);transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .6s ease}
+  .ms-media:hover img{transform:scale(1.34);filter:grayscale(0) saturate(1)}
+  .ms-media::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(30,34,39,.42) 0%,rgba(26,30,35,.62) 48%,rgba(18,21,25,.92) 100%);
+  }
+  .ms-media .ms-overlay{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;padding:22px 30px 20px;
+  }
+  .ms-media .ms-overlay .serv-num{font-size:.72rem;letter-spacing:.2em;color:rgba(255,255,255,.6);font-weight:500;margin-bottom:10px;display:block}
+  .ms-media .ms-overlay h3{font-family:'Fraunces',serif;font-weight:400;font-size:1.5rem;color:#fff;letter-spacing:-0.01em;line-height:1.2;margin:0}
   .ms-body{padding:26px 30px 30px}
   .ms-body h2{font-size:1.5rem;margin-bottom:10px}
   .ms-body .modal-eyebrow{margin-bottom:14px}
@@ -515,7 +600,7 @@
   @media (max-width:560px){
     .wrap{padding:0 20px}
     .header-inner{padding:13px 20px}
-    .brand img{height:24px}
+    .brand img{height:32px}
     .nav-cta .lbl{display:none}
     .nav-cta .lbl-sm{display:inline}
     .nav-menu{gap:12px}
@@ -537,10 +622,11 @@
     .standort-map{min-height:280px}
     .wwm-cell{padding:30px 26px}
     .ms-body{padding:24px 22px 26px}
-    .serv-body{padding:22px 22px 24px}
+    .serv-card{aspect-ratio:16/11}
+    .serv-overlay{padding:22px 22px 22px}
   }
   @media (max-width:380px){
-    .brand img{height:22px}
+    .brand img{height:28px}
     .nav-cta{font-size:.72rem;letter-spacing:.1em}
     .hero h1{font-size:2.3rem}
     .sec-title{font-size:1.78rem}
@@ -583,14 +669,14 @@
     <div class="hero-grid">
       <div class="hero-head">
         <p class="eyebrow reveal" data-d="1">Olaf Hohnen · Meisterbetrieb seit 1995</p>
-        <h1 class="reveal" data-d="2">Räume, die bleiben — <em>für Sie gefertigt</em>.</h1>
+        <h1 class="reveal" data-d="2">Möbel, die bleiben — <em>für Sie gefertigt</em>.</h1>
       </div>
       <figure class="hero-figure reveal" data-d="3">
         <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&amp;q=80&amp;auto=format&amp;fit=crop" alt="Maßgefertigter, wohnlicher Innenraum von Olaf Hohnen" loading="eager">
         <figcaption class="hero-badge">Maßarbeit aus Meisterhand</figcaption>
       </figure>
       <div class="hero-rest">
-        <p class="hero-sub reveal" data-d="3">Seit über 30 Jahren verwandeln wir Ihre Ideen in maßgefertigte Räume zum Wohlfühlen — persönlich begleitet, präzise gefertigt und gemacht, um zu bleiben. Für anspruchsvolle Privat- und Geschäftskunden in Mönchengladbach, Düsseldorf, Köln und am Niederrhein.</p>
+        <p class="hero-sub reveal" data-d="3">Als <strong>handwerkliche Möbeltischlerei</strong> verwandeln wir seit über 30 Jahren Ihre Ideen in maßgefertigte Möbel zum Wohlfühlen — persönlich begleitet, präzise gefertigt und gemacht, um zu bleiben. Für anspruchsvolle Privat- und Geschäftskunden in <span class="loc">Mönchengladbach</span>, <span class="loc">Düsseldorf</span>, <span class="loc">Köln</span> und am <span class="loc">Niederrhein</span>.</p>
         <div class="hero-actions reveal" data-d="4">
           <a href="#kontakt" class="btn">Projekt besprechen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
           <a href="#leistungen" class="hero-link">Unsere Leistungen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -651,119 +737,119 @@
     <div class="serv-grid">
       <article class="serv-card reveal" data-d="1" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Ladenbau"
-        data-img="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Verkaufsräume, die Marke und Produkt in Szene setzen. Wir planen und fertigen Ladeneinrichtungen, Warenträger, Regalsysteme und Kassenbereiche — durchdacht in Funktion, Materialwahl und Detail und langlebig im täglichen Einsatz.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Ladenbau — Verkaufsraum"></div>
-        <div class="serv-body">
-          <span class="serv-num">01</span>
-          <h3>Ladenbau</h3>
-          <p>Verkaufsräume, die Marke und Produkt in Szene setzen.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Ladenbau — Verkaufsraum">
+            <div class="serv-overlay">
+              <span class="serv-num">01</span>
+              <h3>Ladenbau</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
 
       <article class="serv-card reveal" data-d="2" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Büroeinrichtungen"
-        data-img="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Arbeitswelten mit klarer Linie. Vom Empfang über Besprechungsräume bis zum einzelnen Arbeitsplatz fertigen wir repräsentative, funktionale Büromöbel nach Maß — abgestimmt auf Architektur, Akustik und Abläufe.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Büroeinrichtung — moderner Besprechungsraum"></div>
-        <div class="serv-body">
-          <span class="serv-num">02</span>
-          <h3>Büroeinrichtungen</h3>
-          <p>Repräsentative, funktionale Büromöbel nach Maß.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Büroeinrichtung — moderner Besprechungsraum">
+            <div class="serv-overlay">
+              <span class="serv-num">02</span>
+              <h3>Büroeinrichtungen</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
 
       <article class="serv-card reveal" data-d="3" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Praxiseinrichtungen"
-        data-img="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Empfang, Behandlung und Wartebereich aus einer Hand. Wir realisieren hochwertige Praxiseinrichtungen für Ärzte, Zahnärzte und Therapeuten — hygienisch, funktional und mit einer Anmutung, die Vertrauen schafft.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Praxiseinrichtung — heller Behandlungsraum"></div>
-        <div class="serv-body">
-          <span class="serv-num">03</span>
-          <h3>Praxiseinrichtungen</h3>
-          <p>Empfang, Behandlung und Wartebereich — vertrauensbildend.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Praxiseinrichtung — heller Behandlungsraum">
+            <div class="serv-overlay">
+              <span class="serv-num">03</span>
+              <h3>Praxiseinrichtungen</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
 
       <article class="serv-card reveal" data-d="1" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Innenausbau"
-        data-img="https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Wand-, Decken- und Raumlösungen, die Architektur und Möbel zusammenführen. Wir übernehmen den hochwertigen Innenausbau — von Wandverkleidungen und Raumteilern bis zu präzise eingepassten Einbauten.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Innenausbau — gestalteter Innenraum"></div>
-        <div class="serv-body">
-          <span class="serv-num">04</span>
-          <h3>Innenausbau</h3>
-          <p>Wand-, Decken- und Raumlösungen aus einer Hand.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Innenausbau — gestalteter Innenraum">
+            <div class="serv-overlay">
+              <span class="serv-num">04</span>
+              <h3>Innenausbau</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
 
       <article class="serv-card reveal" data-d="2" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Küchen"
-        data-img="https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Individuelle Küchen, die zu Ihnen passen. Wir planen und fertigen Maßküchen mit präziser Verarbeitung, durchdachter Funktion und hochwertigen Fronten, Arbeitsplatten und Beschlägen.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Küche — Maßküche in Weiß"></div>
-        <div class="serv-body">
-          <span class="serv-num">05</span>
-          <h3>Küchen</h3>
-          <p>Maßküchen mit präziser Fertigung und Funktion.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Küche — Maßküche in Weiß">
+            <div class="serv-overlay">
+              <span class="serv-num">05</span>
+              <h3>Küchen</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
 
       <article class="serv-card reveal" data-d="3" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Badezimmermöbel"
-        data-img="https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Feuchtraumtaugliche Maßmöbel mit eleganter, ruhiger Formensprache. Waschtische, Spiegelschränke und Stauraumlösungen — exakt eingepasst und auf Materialien ausgelegt, die im Bad dauerhaft bestehen.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Badezimmermöbel — Waschtisch mit Holzfront"></div>
-        <div class="serv-body">
-          <span class="serv-num">06</span>
-          <h3>Badezimmermöbel</h3>
-          <p>Feuchtraummöbel mit eleganter Formensprache.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Badezimmermöbel — Waschtisch mit Holzfront">
+            <div class="serv-overlay">
+              <span class="serv-num">06</span>
+              <h3>Badezimmermöbel</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
 
       <article class="serv-card reveal" data-d="1" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Einbauschränke"
-        data-img="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Stauraum, der sich nahtlos in den Raum fügt. Begehbare Kleiderschränke, Garderoben und Einbauten bis in jede Dachschräge und Nische — perfekt ausgenutzter Platz, unsichtbar integriert.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Einbauschrank — maßgefertigter Schrank"></div>
-        <div class="serv-body">
-          <span class="serv-num">07</span>
-          <h3>Einbauschränke</h3>
-          <p>Stauraum, der sich nahtlos in den Raum fügt.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Einbauschrank — maßgefertigter Schrank">
+            <div class="serv-overlay">
+              <span class="serv-num">07</span>
+              <h3>Einbauschränke</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
 
       <article class="serv-card reveal" data-d="2" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Medienmöbel"
-        data-img="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Lösungen für Technik und Medien im Einklang mit dem Design. TV- und Medienwände mit cleverer Kabelführung, Geräteintegration und ruhiger Optik — maßgefertigt für Wohn- und Geschäftsräume.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Medienmöbel — Medienwand"></div>
-        <div class="serv-body">
-          <span class="serv-num">08</span>
-          <h3>Medienmöbel</h3>
-          <p>Medienwände mit cleverer Technik-Integration.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Medienmöbel — Medienwand">
+            <div class="serv-overlay">
+              <span class="serv-num">08</span>
+              <h3>Medienmöbel</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
 
       <article class="serv-card reveal" data-d="3" role="button" tabindex="0" aria-haspopup="dialog"
         data-title="Thekenanlagen"
-        data-img="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=1100&amp;q=78&amp;auto=format&amp;fit=crop"
+        data-img="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=1100&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy"
         data-desc="Empfangs- und Verkaufstheken mit Charakter. Der erste Eindruck zählt — wir fertigen Theken und Counter, die Funktion, Ergonomie und Markenauftritt elegant miteinander verbinden.">
-        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=640&amp;q=70&amp;auto=format&amp;fit=crop" alt="Thekenanlage — Counter"></div>
-        <div class="serv-body">
-          <span class="serv-num">09</span>
-          <h3>Thekenanlagen</h3>
-          <p>Theken und Counter mit Charakter und Funktion.</p>
-          <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </div>
+        <div class="serv-media"><img loading="lazy" src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=1000&amp;q=78&amp;auto=format&amp;fit=crop&amp;crop=entropy" alt="Thekenanlage — Counter">
+            <div class="serv-overlay">
+              <span class="serv-num">09</span>
+              <h3>Thekenanlagen</h3>
+              <span class="serv-more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </div>
       </article>
     </div>
   </div>
@@ -776,9 +862,9 @@
       <div class="about-copy reveal">
         <p class="eyebrow" data-d="1" style="margin-bottom:26px">Über uns</p>
         <h2 class="sec-title" data-d="2" style="margin-bottom:28px">Ein etablierter <em>Meisterbetrieb</em> mit Anspruch.</h2>
-        <p data-d="3">Die <strong>Olaf Hohnen handwerkliche Möbeltischlerei GmbH</strong> ist ein inhabergeführtes Familienunternehmen mit über 30 Jahren Erfahrung. Was 1995 begann, ist heute ein Meisterbetrieb für hochwertigen Innenausbau und Maßanfertigung.</p>
+        <p data-d="3">Die <strong>Olaf Hohnen handwerkliche Möbeltischlerei GmbH</strong> ist ein inhabergeführtes Familienunternehmen mit über 30 Jahren Erfahrung. Was 1995 begann, ist heute ein <strong>Meisterbetrieb</strong> für hochwertigen Innenausbau und Maßanfertigung.</p>
         <p data-d="3">Wir verstehen uns als persönlicher Einrichtungspartner für anspruchsvolle Privat- und Geschäftskunden — mit kompromisslosem Qualitätsanspruch, präziser Verarbeitung und einem festen Ansprechpartner über das gesamte Projekt hinweg.</p>
-        <p data-d="3">Unser Einzugsgebiet reicht weit über Mönchengladbach hinaus:</p>
+        <p data-d="3">Unser Einzugsgebiet umfasst unter anderem die folgenden Regionen — und reicht weit darüber hinaus:</p>
         <div class="about-regions reveal" data-d="4">
           <span>Mönchengladbach</span>
           <span>Düsseldorf</span>
@@ -821,13 +907,25 @@
               <input type="text" id="c-name" placeholder="Vor- und Nachname">
             </div>
             <div class="field">
-              <label for="c-phone">Telefon</label>
-              <input type="tel" id="c-phone" placeholder="Optional">
+              <label for="c-phone">Telefon <span class="req">*</span></label>
+              <input type="tel" id="c-phone" placeholder="Ihre Telefonnummer" required>
+              <span class="field-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="fe-msg"></span></span>
             </div>
           </div>
           <div class="field">
             <label for="c-email">E-Mail</label>
             <input type="email" id="c-email" placeholder="name@beispiel.de">
+            <span class="field-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="fe-msg"></span></span>
+          </div>
+          <div class="field">
+            <label for="c-type">Art der Anfrage <span class="req">*</span></label>
+            <select id="c-type" required>
+              <option value="" disabled selected>Bitte auswählen …</option>
+              <option value="Privat">Privat</option>
+              <option value="Geschäftlich">Geschäftlich</option>
+              <option value="Architektur">Architektur</option>
+            </select>
+            <span class="field-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="fe-msg"></span></span>
           </div>
           <div class="field">
             <label for="c-msg">Ihre Nachricht</label>
@@ -837,8 +935,18 @@
             Nachricht senden
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
-          <p class="form-note">Über diesen Button öffnet sich Ihr E-Mail-Programm mit einer vorbereiteten Nachricht an <a href="mailto:o.hohnen@gmx.net" style="color:var(--red);text-decoration:none">o.hohnen@gmx.net</a>.</p>
+          <div class="form-banner form-banner--err" id="c-banner" role="alert" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="c-banner-msg"></span>
+          </div>
+          <p class="form-note">Mit dem Absenden stimmen Sie zu, dass wir Ihre Angaben zur Bearbeitung Ihrer Anfrage verwenden. Wir melden uns persönlich bei Ihnen zurück.</p>
         </form>
+        <div class="form-success" id="c-success" hidden>
+          <div class="fs-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Vielen Dank für Ihre Anfrage</h3>
+          <p id="c-success-msg">Wir haben Ihre Nachricht erhalten und melden uns zeitnah persönlich bei Ihnen zurück.</p>
+          <p class="fs-detail" id="c-success-detail">Eine Bestätigung ist an Ihre E-Mail-Adresse unterwegs.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -872,8 +980,15 @@
       <div class="standort-map">
         <iframe
           title="Standort Olaf Hohnen Möbeltischlerei — Nelkenstraße 47, Mönchengladbach"
-          src="https://www.google.com/maps?q=Nelkenstra%C3%9Fe%2047%2C%2041066%20M%C3%B6nchengladbach&output=embed"
+          src="https://www.google.com/maps?q=Olaf%20Hohnen%20handwerkliche%20M%C3%B6beltischlerei%20GmbH%2C%20Nelkenstra%C3%9Fe%2047%2C%2041066%20M%C3%B6nchengladbach&output=embed"
           loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <a class="map-profile" href="https://www.google.com/maps/search/?api=1&amp;query=Olaf%20Hohnen%20handwerkliche%20M%C3%B6beltischlerei%20GmbH%2C%20Nelkenstra%C3%9Fe%2047%2C%2041066%20M%C3%B6nchengladbach" target="_blank" rel="noopener" aria-label="Olaf Hohnen Handwerkliche Möbel-Tischlerei GmbH in Google Maps öffnen">
+          <span>
+            <span class="mp-sub">Unternehmensprofil</span>
+            <span class="mp-name">Olaf Hohnen Handwerkliche Möbel-Tischlerei GmbH</span>
+          </span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
       </div>
     </div>
   </div>
@@ -972,10 +1087,14 @@
     <button class="modal-close" onclick="closeModal('service')" aria-label="Schließen">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <div class="ms-media"><img id="ms-img" src="" alt=""></div>
+    <div class="ms-media">
+      <img id="ms-img" src="" alt="">
+      <div class="ms-overlay">
+        <span class="serv-num">Leistung</span>
+        <h3 id="ms-title"></h3>
+      </div>
+    </div>
     <div class="ms-body">
-      <p class="modal-eyebrow">Leistung</p>
-      <h2 id="ms-title"></h2>
       <p id="ms-text"></p>
       <a class="ms-cta" href="#kontakt" onclick="closeModal('service')">Projekt anfragen
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -1070,20 +1189,134 @@
     });
   }
 
-  // contact form -> mailto
+  // contact form -> FormSubmit (E-Mail-Versand an Olaf Hohnen + Auto-Bestätigung an den Kunden)
   const cform = document.getElementById("cform");
   if(cform){
+    const cbtn     = cform.querySelector("button[type=submit]");
+    const cbtnTxt  = cbtn ? cbtn.childNodes[0].nodeValue : "";
+    const banner   = document.getElementById("c-banner");
+    const bannerMsg= document.getElementById("c-banner-msg");
+    const success  = document.getElementById("c-success");
+    const el = id => document.getElementById(id);
+    const v  = id => (el(id) && el(id).value) ? el(id).value.trim() : "";
+
+    function fieldError(id, message){
+      const f = el(id) ? el(id).closest(".field") : null;
+      if(!f) return;
+      f.classList.add("field--error");
+      const m = f.querySelector(".fe-msg");
+      if(m) m.textContent = message;
+    }
+    function clearErrors(){
+      cform.querySelectorAll(".field--error").forEach(f => f.classList.remove("field--error"));
+      if(banner){ banner.hidden = true; banner.classList.remove("form-banner--info"); banner.classList.add("form-banner--err"); }
+    }
+    function showBanner(message){
+      if(!banner) return;
+      const text = (message && message.trim()) ? message.trim()
+        : "Bitte vervollständigen Sie noch die markierten Felder, dann nehmen wir Ihre Anfrage gerne entgegen.";
+      bannerMsg.textContent = text;
+      banner.hidden = false;
+    }
+    // Fehler verschwindet, sobald der Nutzer das Feld korrigiert
+    ["c-name","c-phone","c-email","c-type","c-msg"].forEach(function(id){
+      const node = el(id);
+      if(node) node.addEventListener("input", function(){
+        const f = node.closest(".field");
+        if(f) f.classList.remove("field--error");
+      });
+    });
+    if(el("c-type")) el("c-type").addEventListener("change", function(){
+      const f = el("c-type").closest(".field");
+      if(f) f.classList.remove("field--error");
+    });
+
     cform.addEventListener("submit", function(ev){
       ev.preventDefault();
-      const v = id => (document.getElementById(id)||{}).value ? document.getElementById(id).value.trim() : "";
-      const name = v("c-name"), phone = v("c-phone"), email = v("c-email"), msg = v("c-msg");
-      const subject = "Kontaktanfrage über die Website" + (name ? " — " + name : "");
-      let body = (msg || "") + "\n\n";
-      if(name)  body += "Name: " + name + "\n";
-      if(email) body += "E-Mail: " + email + "\n";
-      if(phone) body += "Telefon: " + phone + "\n";
-      const href = "mailto:o.hohnen@gmx.net?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-      window.location.href = href;
+      const name = v("c-name"), phone = v("c-phone"), email = v("c-email"), msg = v("c-msg"), type = v("c-type");
+
+      // --- Validierung mit freundlichen, konkreten Hinweisen (nur bei echtem Fehlen) ---
+      clearErrors();
+      const errors = [];
+      const missing = [];
+      if(!type){
+        fieldError("c-type", "Bitte wählen Sie aus, worum es bei Ihrer Anfrage geht.");
+        errors.push("c-type"); missing.push("die Art Ihrer Anfrage");
+      }
+      if(!phone){
+        fieldError("c-phone", "Bitte hinterlassen Sie eine Telefonnummer, damit wir Sie persönlich erreichen können.");
+        errors.push("c-phone"); missing.push("Ihre Telefonnummer");
+      }
+      let emailInvalid = false;
+      if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        fieldError("c-email", "Diese E-Mail-Adresse scheint nicht zu stimmen — bitte prüfen Sie sie kurz.");
+        errors.push("c-email"); emailInvalid = true;
+      }
+      if(errors.length){
+        const join = arr => arr.length <= 1 ? (arr[0] || "")
+          : arr.slice(0, -1).join(", ") + " und " + arr[arr.length - 1];
+        let message = "";
+        if(missing.length){
+          message = "Bitte ergänzen Sie noch " + join(missing) + ", dann nehmen wir Ihre Anfrage gerne entgegen.";
+          if(emailInvalid) message += " Bitte prüfen Sie außerdem kurz Ihre E-Mail-Adresse.";
+        } else if(emailInvalid){
+          message = "Bitte prüfen Sie kurz Ihre E-Mail-Adresse, dann können wir Ihnen antworten.";
+        } else {
+          message = "Bitte vervollständigen Sie noch die markierten Felder, dann geht Ihre Anfrage raus.";
+        }
+        showBanner(message);
+        const first = el(errors[0]);
+        if(first){ first.focus(); first.scrollIntoView({behavior:"smooth", block:"center"}); }
+        return;
+      }
+
+      const subject = "Anfrage über die Website" + (type ? " (" + type + ")" : "") + (name ? " — " + name : "");
+      const data = new FormData();
+      if(name)  data.append("Name", name);
+      if(email) data.append("E-Mail", email);
+      data.append("Telefon", phone);
+      data.append("Art der Anfrage", type);
+      if(msg)   data.append("Nachricht", msg);
+      data.append("_subject", subject);
+      data.append("_template", "table");
+      data.append("_captcha", "false");
+      if(email){
+        data.append("_replyto", email);
+        data.append("_autoresponse", "Vielen Dank für Ihre Anfrage bei der Olaf Hohnen Handwerkliche Möbel-Tischlerei GmbH.\n\nWir haben Ihre Nachricht (Art der Anfrage: " + type + ") erhalten und melden uns persönlich bei Ihnen.\n\nHerzliche Grüße\nIhr Team von Olaf Hohnen");
+      }
+
+      if(cbtn){ cbtn.disabled = true; cbtn.childNodes[0].nodeValue = "Wird gesendet … "; }
+
+      fetch("https://formsubmit.co/ajax/niclas.springmeier@opsaltech.com", {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: data
+      })
+      .then(function(r){ return r.json().catch(function(){ return {}; }); })
+      .then(function(res){
+        var ok = res && (res.success === "true" || res.success === true);
+        if(ok && success){
+          const det = el("c-success-detail");
+          if(det) det.hidden = !email;
+          cform.hidden = true;
+          success.hidden = false;
+          success.scrollIntoView({behavior:"smooth", block:"center"});
+        } else {
+          // Versand nicht bestätigt (z. B. FormSubmit-Aktivierung ausstehend)
+          if(window.console) console.warn("FormSubmit:", res);
+          showBanner("Ihre Anfrage konnte gerade nicht zugestellt werden. Bitte versuchen Sie es in Kürze erneut — oder schreiben Sie uns direkt per E-Mail.");
+          if(banner){ banner.classList.remove("form-banner--err"); banner.classList.add("form-banner--info"); }
+          if(cbtn){ cbtn.disabled = false; cbtn.childNodes[0].nodeValue = cbtnTxt; }
+        }
+      })
+      .catch(function(){
+        // Fallback: E-Mail-Programm öffnen, falls der Online-Versand fehlschlägt
+        let body = (msg || "") + "\n\nArt der Anfrage: " + type + "\nTelefon: " + phone + (email ? "\nE-Mail: " + email : "") + (name ? "\nName: " + name : "");
+        window.location.href = "mailto:niclas.springmeier@opsaltech.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        showBanner("Der direkte Versand ist gerade nicht möglich — wir haben Ihr E-Mail-Programm mit der fertigen Nachricht geöffnet.");
+        banner.classList.remove("form-banner--err"); banner.classList.add("form-banner--info");
+        if(cbtn){ cbtn.disabled = false; cbtn.childNodes[0].nodeValue = cbtnTxt; }
+      });
     });
   }
 
