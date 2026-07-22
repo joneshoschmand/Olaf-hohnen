@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://olaf-hohnen-handwerkliche-moebeltischlerei.de/sitemap.xml
