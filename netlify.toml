@@ -1,2 +1,42 @@
 [build]
   publish = "."
+
+# --- Domain-Konsolidierung -------------------------------------------------
+# Kanonisch ist olaf-hohnen-handwerkliche-moebeltischlerei.de (oe-Schreibweise).
+# Darauf zeigen bereits canonical, og:url, Sitemap und JSON-LD.
+# Alle anderen Hosts lieferten bislang HTTP 200 mit identischem Inhalt aus —
+# Google hat deshalb die Netlify-Subdomain indexiert statt der echten Domain.
+
+# Netlify-Subdomain (rankte für den Firmennamen anstelle der Domain)
+[[redirects]]
+  from = "https://olaf-hohnen.netlify.app/*"
+  to = "https://olaf-hohnen-handwerkliche-moebeltischlerei.de/:splat"
+  status = 301
+  force = true
+
+# Umlaut-Domain (Punycode) auf die kanonische oe-Schreibweise
+[[redirects]]
+  from = "https://xn--olaf-hohnen-handwerkliche-mbeltischlerei-97d.de/*"
+  to = "https://olaf-hohnen-handwerkliche-moebeltischlerei.de/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.xn--olaf-hohnen-handwerkliche-mbeltischlerei-97d.de/*"
+  to = "https://olaf-hohnen-handwerkliche-moebeltischlerei.de/:splat"
+  status = 301
+  force = true
+
+# Langes Caching für selbstgehostete Schriften (Performance / Core Web Vitals)
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Sinnvolle Standard-Header (Sicherheit & Datenschutz)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
