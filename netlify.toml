@@ -33,6 +33,14 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Selbstgehostete Bilder. Bewusst kein "immutable" wie bei den Schriften:
+# die Dateinamen sind sprechend statt content-gehasht, ein Bildtausch soll
+# also nach spätestens einem Tag bei allen Besuchern ankommen.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
 # Sinnvolle Standard-Header (Sicherheit & Datenschutz)
 [[headers]]
   for = "/*"
